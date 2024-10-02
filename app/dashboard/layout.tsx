@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import SideNav from "./_components/SideNav";
 
@@ -12,11 +13,11 @@ function Layout({
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   return (
-    <div>
-      <div>
+    <div className="bg-slate-100 h-screen poppins">
+      <div className="md:w-64 fixed">
         <SideNav isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
-      {children}
+      <div>{children}</div>
     </div>
   );
 }
