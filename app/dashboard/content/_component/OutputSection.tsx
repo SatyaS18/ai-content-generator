@@ -11,7 +11,7 @@ interface Props {
   aiOutput: string;
 }
 
-function Output({ aiOutput }: Props) {
+function OutputSection({ aiOutput }: Props) {
   const editorRef = useRef<EditorType>(null);
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -73,4 +73,4 @@ function Output({ aiOutput }: Props) {
   );
 }
 
-export default Output;
+export default OutputSection;
