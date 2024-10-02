@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   pgTable,
   serial,
@@ -23,4 +24,11 @@ export const payments = pgTable("payments", {
   status: varchar("status", { length: 50 }).notNull(),
   reference: varchar("reference", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const users = pgTable("users", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  email: varchar("email", { length: 255 }).notNull(),
+  totalUsage: integer("totalUsage").default(10000), // Start with 10,000 credits
+  subscriptionStatus: boolean("subscriptionStatus").default(false), // Default to false (not subscribed)
 });
