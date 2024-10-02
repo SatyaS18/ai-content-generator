@@ -18,7 +18,7 @@ function Layout({
       <div className="md:w-64 fixed">
         <SideNav isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
-      <div>
+      <div className="md:ml-64">
         <Header toggleSidebar={toggleSidebar} />
         {children}
       </div>
