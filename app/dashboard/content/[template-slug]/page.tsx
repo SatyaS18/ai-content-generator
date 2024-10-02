@@ -8,11 +8,14 @@ import Templates from "@/app/(data)/Templates";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftCircle } from "lucide-react";
 import Link from "next/link";
-import { chatSession } from "@/utils/AIModal";
+import { chatSession } from "@/utils/AiModel";
 import { useUser } from "@clerk/nextjs";
-// import moment from "moment";
+import moment from "moment";
 // import { TotalUsageContext } from "@/app/(context)/TotalUsageContext";
 import { useRouter } from "next/navigation";
+import { aiOutPut } from "@/utils/schema";
+import { db } from "@/utils/db";
+import { toast } from "react-toastify";
 
 interface PROPS {
   params: {
@@ -37,8 +40,8 @@ function CreateNewContent(props: PROPS) {
     //   return;
     // }
     setLoading(true);
-    const SelectedPromp = selectedTemplate?.aiPrompt;
-    const FinalAIPrompt = JSON.stringify(formData) + ", " + SelectedPromp;
+    const SelectedPrompt = selectedTemplate?.aiPrompt;
+    const FinalAIPrompt = JSON.stringify(formData) + ", " + SelectedPrompt;
 
     const result = await chatSession.sendMessage(FinalAIPrompt);
     const aiResponseText = result.response.text();
@@ -49,30 +52,46 @@ function CreateNewContent(props: PROPS) {
     setLoading(false);
   };
 
-  const SaveInDb = async (formData: any, slug: any, aiResp: string | null) => {
-    try {
-      const response = await fetch("/api/save-content", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          formData,
-          slug,
-          aiResponse: aiResp,
-          createdBy: user?.primaryEmailAddress?.emailAddress,
-        }),
-      });
+  //   const SaveInDb = async (formData: any, slug: any, aiResp: string | null) => {
+  //     try {
+  //       const response = await fetch("/api/save-content", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           formData,
+  //           slug,
+  //           aiResponse: aiResp,
+  //           createdBy: user?.primaryEmailAddress?.emailAddress,
+  //         }),
+  //       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error saving to database:", errorData); // Log the error details
-      } else {
-        const resultData = await response.json(); // Log the result data
-        console.log("Successfully saved to database:", resultData); // This will include the `result` from the API
-      }
+  //       if (!response.ok) {
+  //         const errorData = await response.json();
+  //         console.error("Error saving to database:", errorData); // Log the error details
+  //       } else {
+  //         const resultData = await response.json(); // Log the result data
+  //         console.log("Successfully saved to database:", resultData); // This will include the `result` from the API
+  //       }
+  //     } catch (error) {
+  //       console.error("Error saving content:", error); // Log any other errors
+  //     }
+  //   };
+
+  const SaveInDb = async (formData: any, slug: any, aiResp: string) => {
+    try {
+      const result = await db.insert(aiOutPut).values({
+        formData: formData,
+        templateSlug: slug,
+        aiResponse: aiResp,
+        createdBy: user?.primaryEmailAddress?.emailAddress,
+        createdAt: moment().format("DD/MM/YYYY"),
+      });
+      console.log("Database insert result:", result);
     } catch (error) {
-      console.error("Error saving content:", error); // Log any other errors
+      console.error("Error saving to database:", error);
+      toast.error("Failed to save the generated content. Please try again.");
     }
   };
 
