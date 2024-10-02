@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import SideNav from "./_components/SideNav";
+import Header from "./_components/Header";
 
 function Layout({
   children,
@@ -17,7 +18,10 @@ function Layout({
       <div className="md:w-64 fixed">
         <SideNav isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
-      <div>{children}</div>
+      <div>
+        <Header toggleSidebar={toggleSidebar} />
+        {children}
+      </div>
     </div>
   );
 }
