@@ -32,3 +32,12 @@ export const users = pgTable("users", {
   totalUsage: integer("totalUsage").default(10000), // Start with 10,000 credits
   subscriptionStatus: boolean("subscriptionStatus").default(false), // Default to false (not subscribed)
 });
+
+export const UserSubscription = pgTable("userSubscription", {
+  id: serial("id").primaryKey(),
+  email: varchar("email"),
+  userName: varchar("userName"),
+  active: boolean("active"),
+  paymentId: varchar("paymentId"),
+  joinDate: varchar("joinData"),
+});
