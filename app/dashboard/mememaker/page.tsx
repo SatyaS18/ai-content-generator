@@ -1,6 +1,5 @@
 import React from "react";
 import MemeGenerator from "./_component/MemeGeneratorPage";
-import MemeSubmissionForm from "./_component/MemeSubmissionForm";
 
 function meme() {
   return (
