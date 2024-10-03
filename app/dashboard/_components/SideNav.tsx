@@ -1,7 +1,7 @@
 import { FileClock, Home, Image, Settings, WalletCards } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-// import UsageTrack from "./UsageTrack";
 import Logo from "@/components/landingPage/Logo";
+import UsageTrack from "./UsageTrack";
 
 function SideNav({
   isOpen,
@@ -61,9 +61,9 @@ function SideNav({
         ))}
       </div>
 
-      {/* <div className="absolute bottom-10 left-0 w-full">
+      <div className="absolute bottom-10 left-0 w-full">
         <UsageTrack />
-      </div> */}
+      </div>
     </div>
   );
 }
