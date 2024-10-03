@@ -33,7 +33,7 @@ function OutputSection({ aiOutput }: Props) {
         // Reset copied state after 3 seconds
         setTimeout(() => {
           setCopied(false);
-        }, 3000);
+        }, 5000);
       } catch (error) {
         console.error("Failed to copy: ", error);
       }
