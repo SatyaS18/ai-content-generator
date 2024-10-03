@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
 import React from "react";
 import Templates from "@/app/(data)/Templates";
-import CopyButton from "../_components/copyButton";
+import CopyButton from "../_components/CopyButton";
 
 export interface HISTORY {
   id: number;
@@ -22,7 +22,7 @@ const GetTemplateName = (slug: string) => {
 
 const GetTemplateImage = (slug: string) => {
   const template = Templates?.find((item) => item.slug === slug);
-  return template ? template.icon : ""; // Return the icon URL for the matched template slug
+  return template ? template.icon : "";
 };
 
 const History = async () => {
@@ -91,7 +91,6 @@ const History = async () => {
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {/* {new Date(history.createdAt).toLocaleString()} */}
                   {history.createdAt}
                 </td>
 
