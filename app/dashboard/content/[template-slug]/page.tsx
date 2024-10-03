@@ -11,11 +11,13 @@ import Link from "next/link";
 import { chatSession } from "@/utils/AiModel";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
-// import { TotalUsageContext } from "@/app/(context)/TotalUsageContext";
 import { useRouter } from "next/navigation";
 import { aiOutPut } from "@/utils/schema";
 import { db } from "@/utils/db";
 import { toast } from "react-toastify";
+import { TotalUsageContext } from "@/app/(context)/TotalUsageContext";
+import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
+import { UpdateCreditUsageContext } from "@/app/(context)/UpdateCreditUsageContext";
 
 interface PROPS {
   params: {
@@ -31,14 +33,20 @@ function CreateNewContent(props: PROPS) {
   const { user } = useUser();
   const [aiOutput, setAiOutput] = useState<string>("");
   const router = useRouter();
-  //   const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
+  const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
+  const { userSubscription, setUserSubscription } = useContext(
+    UserSubscriptionContext
+  );
+  const { updateCreditUsage, setUpdateCreditUsage } = useContext(
+    UpdateCreditUsageContext
+  );
 
   const GenerateAIContent = async (formData: any) => {
-    // if (totalUsage >= 10000) {
-    //   console.log("Please Upgrade");
-    //   router.push("/dashboard/billing");
-    //   return;
-    // }
+    if (totalUsage >= 10000 && !userSubscription) {
+      console.log("Please Upgrade");
+      router.push("/dashboard/billing");
+      return;
+    }
     setLoading(true);
     const SelectedPrompt = selectedTemplate?.aiPrompt;
     const FinalAIPrompt = JSON.stringify(formData) + ", " + SelectedPrompt;
@@ -50,6 +58,7 @@ function CreateNewContent(props: PROPS) {
 
     await SaveInDb(formData, selectedTemplate?.slug, aiResponseText);
     setLoading(false);
+    setUpdateCreditUsage(Date.now());
   };
 
   //   const SaveInDb = async (formData: any, slug: any, aiResp: string | null) => {
