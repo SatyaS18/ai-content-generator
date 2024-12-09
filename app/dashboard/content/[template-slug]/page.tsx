@@ -90,19 +90,24 @@ function CreateNewContent(props: PROPS) {
 
   const SaveInDb = async (formData: any, slug: any, aiResp: string) => {
     try {
+      const createdBy =
+        user?.primaryEmailAddress?.emailAddress || "default@example.com"; // Assign a default value if undefined
+
       const result = await db.insert(aiOutPut).values({
         formData: formData,
         templateSlug: slug,
         aiResponse: aiResp,
-        createdBy: user?.primaryEmailAddress?.emailAddress,
+        createdBy: createdBy,
         createdAt: moment().format("DD/MM/YYYY"),
       });
+
       console.log("Database insert result:", result);
     } catch (error) {
       console.error("Error saving to database:", error);
       toast.error("Failed to save the generated content. Please try again.");
     }
   };
+
 
   return (
     <div className="lg:p-10 p-5">
