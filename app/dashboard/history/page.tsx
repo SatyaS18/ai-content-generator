@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
 import React from "react";
 import Templates from "@/app/(data)/Templates";
-import CopyButton from "../_components/CopyButton";
+import CopyButton from "../components/CopyButton";
 
 export interface HISTORY {
   id: number;

@@ -7,7 +7,7 @@ import { convertToSubcurrency } from "@/lib/convertToSubcurrency";
 import { useUser } from "@clerk/nextjs";
 import { useContext } from "react";
 import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
-import CheckoutPage from "../_components/CheckoutPage";
+import CheckoutPage from "../components/CheckoutPage";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "default_public_key"

@@ -3,7 +3,7 @@
 import React, { useContext, useState } from "react";
 import FormSection from "../_component/FormSection";
 import OutputSection from "../_component/OutputSection";
-import { TEMPLATE } from "../../_components/TemplateListSection";
+import { TEMPLATE } from "../../components/TemplateListSection";
 import Templates from "@/app/(data)/Templates";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftCircle } from "lucide-react";
@@ -107,7 +107,6 @@ function CreateNewContent(props: PROPS) {
       toast.error("Failed to save the generated content. Please try again.");
     }
   };
-
 
   return (
     <div className="lg:p-10 p-5">

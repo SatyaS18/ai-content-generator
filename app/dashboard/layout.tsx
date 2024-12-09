@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import SideNav from "./_components/SideNav";
-import Header from "./_components/Header";
+import SideNav from "./components/SideNav";
+import Header from "./components/Header";
 import { TotalUsageContext } from "../(context)/TotalUsageContext";
 import { UserSubscriptionContext } from "../(context)/UserSubscriptionContext";
 import { UpdateCreditUsageContext } from "../(context)/UpdateCreditUsageContext";
